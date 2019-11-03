@@ -5,26 +5,26 @@
 
 <select id="getResList" resultType="ResFeedbackDTO">
 	SELECT
-		feedback_no, 
-		f_title, qset_no,
-		regdate, regno, upddate, updno
+		feedbackNo, 
+		fTitle, qsetNo,
+		regDate, regNo, updDate, updNo
 	FROM feedback
 
 </select>
 
 <select id="getResDetail" parameterType="String" resultType="ResFeedbackDTO">
 	SELECT
-		F.feedback_no,
-		F.f_title,
-		F.qset_no,
-		Q.QSET_TITLE,
-		Q.CONTENT,
-		F.regdate
+		F.feedbackNo,
+		F.fTitle,
+		F.qsetNo,
+		Q.qsetTitle,
+		Q.content,
+		F.regDate
 	FROM
 		feedback F, qset Q
 	WHERE
-		F.feedback_no = #{feedback_no}
-		AND F.qset_no = Q.QSET_NO;
+		F.feedbackNo = #{feedback_no}
+		AND F.qsetNo = Q.QSET_NO;
 </select>
 
 

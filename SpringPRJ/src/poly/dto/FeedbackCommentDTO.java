@@ -10,8 +10,6 @@ public class FeedbackCommentDTO {
 	private String updDate;
 	private String updNo;
 	
-	
-	
 	public String getCommentNo() {
 		return commentNo;
 	}

@@ -21,15 +21,42 @@ public class UserController {
 
 	@Resource(name = "UserService")
 	private IUserService userService;
+	
+	@RequestMapping(value="login")
+	public String Login() throws Exception{
+		log.info("accessed login");
 
-	@RequestMapping(value = "UserReg")
-	public String UserReg() throws Exception {
-		log.info("accessed UserReg");
-
-		return "/User/UserReg";
+		return "/login";
 	}
 	
+	@RequestMapping(value="menu")
+	public String Menu() throws Exception{
+		log.info("accessed login");
 
+		return "/menu";
+	}
+	
+	
+	@RequestMapping(value="index")
+	public String Index(HttpSession session) {
+		String userNo = (String)session.getAttribute("userNo");
+		log.info("userno : " + session.getAttribute("userNo"));
+		log.info(this.getClass());
+		
+		if(userNo==null) {
+			return "/login";
+		}else {
+			return "/home";
+		}
+		
+	}
+	
+	@RequestMapping(value = "UserReg")
+	public String UserReg(ModelMap model) throws Exception {
+		log.info("accessed UserReg");
+		
+		return "/User/UserReg";
+	}
 
 	@RequestMapping(value = "UserRegProc")
 	public String UserRegProc(HttpServletRequest request, HttpServletResponse response, ModelMap model)
@@ -42,7 +69,10 @@ public class UserController {
 		String updDate = request.getParameter("updDate");
 		String updNo = request.getParameter("updNo");
 		String passwd = request.getParameter("passwd");
+		String age = request.getParameter("age");
+		String sex = request.getParameter("sex");
 
+		
 		// set interest to null if empty
 		if (interest.isEmpty())
 			interest = null;
@@ -56,6 +86,8 @@ public class UserController {
 		uDTO.setRegNo(regNo);
 		uDTO.setUpdDate(updDate);
 		uDTO.setUpdNo(updNo);
+		uDTO.setSex(sex);
+		uDTO.setAge(age);
 
 		int result = 0;
 
@@ -107,7 +139,7 @@ public class UserController {
 		return result;
 	}
 	
-	@RequestMapping(value="UserLogin", method = RequestMethod.POST)
+	@RequestMapping(value="UserLogin")
 	public String login(ModelMap model, HttpServletRequest request, HttpSession session) throws Exception{
 		log.info("UserLogin");
 		
@@ -193,4 +225,14 @@ public class UserController {
 		
 		return "/redirect";
 	}
+	
+	// 회원정보 수정
+	@RequestMapping(value = "UserEdit")
+	public String userEdit() throws Exception{
+		log.info("UserEdit");
+		return "User/UserEdit";
+	}
+	
+	
+	
 }

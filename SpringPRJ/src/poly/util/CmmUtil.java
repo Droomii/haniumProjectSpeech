@@ -1,5 +1,8 @@
 package poly.util;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CmmUtil {
 	public static String nvl(String str, String chg_str) {
 		String res;
@@ -41,4 +44,11 @@ public class CmmUtil {
 			return "";
 		}
 	}
+	public static void main(String[] args) {
+		String asdf = "12345";
+		System.out.println(asdf.substring(0, 2));
+	}
+	
+
+
 }

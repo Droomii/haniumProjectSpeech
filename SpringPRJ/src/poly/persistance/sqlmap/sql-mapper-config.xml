@@ -9,6 +9,11 @@
 		<typeAlias type="poly.dto.ResFeedbackDTO" alias="ResFeedbackDTO"/>
 		<typeAlias type="poly.dto.UserDTO" alias="UserDTO"/>
 		<typeAlias type="poly.dto.FeedbackCommentDTO" alias="FeedbackCommentDTO"/>
+		<typeAlias type="poly.dto.QSetDTO" alias="QSetDTO"/>
+		<typeAlias type="poly.dto.JobIntrvReviewDTO" alias="JobIntrvReviewDTO"/>
+    	<typeAlias type="poly.dto.JirCommentDTO" alias="JirCommentDTO"/>
+		<typeAlias type="poly.dto.ResultDTO" alias="ResultDTO"/>
+		<typeAlias type="poly.dto.DataAnDTO" alias="DataAnDTO"/>
     </typeAliases>
 
 </configuration>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="poly.persistance.mapper.DataAnMapper">
+	<select id="getTranscript" parameterType="DataAnDTO" resultType="DataAnDTO" >
+	SELECT 
+		transcript 
+	FROM 
+		result 
+	WHERE 
+		answerNo = #{answerNo}
+	</select>
+	<select id="getWholeWordCloud" resultType="DataAnDTO" > 
+	SELECT 
+		transcript 
+	FROM 
+		result
+	</select>
+	<select id="getAnswerQsetNoList" parameterType="ResultDTO" resultType="ResultDTO">
+	SELECT 
+		transcript,
+		confidence,
+		word,
+		term,
+		startTime,
+		endTime
+	FROM 
+		result
+	WHERE
+		qsetNo=#{qsetNo}
+	</select>
+	<select id="getDataSingle" parameterType="ResultDTO" resultType="ResultDTO">
+	SELECT 
+		r.confidence AS confidence,
+		r.word AS word,
+		r.term AS term,
+		r.transcript AS transcript,
+		r.startTime AS startTime,
+		r.endTime AS endTime,
+		u.id AS speechMakerName
+	FROM
+		result r
+	INNER JOIN 
+		userinfo u
+	ON 
+		r.userNo=u.userNo AND r.userNo=#{speechMakerName}
+	WHERE
+		answerNo = #{answerNo}
+	
+	</select>
+	<select id="getDataGenderAge" >
+	SELECT 
+		r.confidence AS confidence,
+		r.word AS word,
+		r.term AS term,
+		r.transcript AS transcript,
+		r.startTime AS startTime,
+		r.endTime AS endTime,
+		u.id AS speechMakerName,
+        u.sex,
+        u.age
+	FROM
+		result r
+	INNER JOIN 
+		userinfo u
+	ON r.userNo = u.userNo
+    where r.qsetNo=#{qsetNo} AND u.sex=#{sex} AND u.age=#{age}
+	</select>
+	<select id="getDataGenderAgeCount" parameterType="string" resultType="map">
+	SELECT 
+        u.sex AS sex
+       ,u.age AS age
+       ,count(*) AS count
+	FROM
+		result r
+	INNER JOIN 
+		userinfo u
+	ON r.userNo = u.userNo AND  r.qsetNo=#{qsetNo} AND u.sex = 'M'
+    group by u.sex,u.age
+    order by u.age asc
+	</select>
+	<select id="getGenderAgeMaxCount" parameterType="string" resultType="integer">
+	SELECT max(count) 
+	FROM 
+	(
+	SELECT 
+	count(*) AS count 
+	FROM 
+	result r 
+	INNER JOIN 
+	userinfo u
+	ON r.userNo = u.userNo AND r.qsetNo=#{qsetNo} AND u.sex = 'M'
+    GROUP BY u.sex,u.age) AS a
+	</select>
+	<select id="getDataFemaleGenderAgeCount" parameterType="string" resultType="map">
+	SELECT 
+        u.sex AS sex
+       ,u.age AS age
+       ,count(*) AS count
+	FROM
+		result r
+	INNER JOIN 
+		userinfo u
+	ON r.userNo = u.userNo AND  r.qsetNo=#{qsetNo} AND u.sex = 'F'
+    group by u.sex,u.age
+    order by u.age asc
+	</select>
+	<select id="getGenderFemaleAgeMaxCount" parameterType="string" resultType="integer">
+	SELECT max(count) 
+	FROM 
+	(
+	SELECT 
+	count(*) AS count 
+	FROM 
+	result r 
+	INNER JOIN 
+	userinfo u
+	ON r.userNo = u.userNo AND r.qsetNo=#{qsetNo} AND u.sex = 'F'
+    GROUP BY u.sex,u.age) AS a
+	</select>
+</mapper>

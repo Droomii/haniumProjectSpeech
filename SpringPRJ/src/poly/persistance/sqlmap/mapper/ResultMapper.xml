@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="poly.persistance.mapper.ResultMapper">
+	<insert id="regResult" parameterType="ResultDTO" useGeneratedKeys="true" keyProperty="answerNo">
+	INSERT INTO
+	result
+	(
+		transcript,
+		confidence,
+		word,
+		term,
+		startTime,
+		endTime,
+		qsetNo,
+		question,
+		userNo
+	)
+	VALUES
+	(
+		#{transcript},
+		#{confidence},
+		#{word},
+		#{term},
+		#{startTime},
+		#{endTime},
+		#{qsetNo},
+		#{question},
+		#{userNo}
+		
+	)
+	</insert>
+	<select id="getTranscript" parameterType="String" resultType="String">
+		SELECT transcript FROM result WHERE answerNo = #{answerNo}
+	</select>
+	<select id="getMorpheme" parameterType="String" resultType="String">
+		SELECT morpheme FROM result WHERE answerNo = #{answerNo}
+	</select>
+	<select id="getAllMorphemes" parameterType="String" resultType="String">
+		SELECT morpheme FROM result WHERE qsetNo = #{qsetNo}
+	</select>
+	<update id="updateMorpheme" parameterType="ResultDTO">
+		UPDATE result SET morpheme = #{morpheme} WHERE answerNo = #{answerNo}
+	</update>
+	<select id ="getWholeConfidence" parameterType="string" resultType="String">
+		SELECT avg(confidence) FROM result WHERE qsetNo = #{qsetNo}
+	</select>
+	
+
+</mapper>

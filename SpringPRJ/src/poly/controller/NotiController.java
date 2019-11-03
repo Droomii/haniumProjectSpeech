@@ -23,10 +23,10 @@ public class NotiController {
 	@Resource(name="NotiService")
 	private INotiService notiService;
 	
-	@RequestMapping(value="/noti/notiReg")
+	@RequestMapping(value="/noti/notiRegOriginal")
 	public String NotiReg() {
 		
-		return "/noti/notiReg";
+		return "/noti/notiRegOriginal";
 	}
 	@RequestMapping(value="/noti/notiRegProc")
 	public String NotiRegProc(HttpServletRequest request, Model model) {
@@ -53,6 +53,7 @@ public class NotiController {
 		}
 		return "/redirect";
 	}
+	
 	@RequestMapping(value="/noti/notiList")
 	public String NotiList(Model model) {
 		List<NotiDTO> nList = new ArrayList<>();
@@ -126,17 +127,19 @@ public class NotiController {
 	public String NotiDelete(HttpServletRequest request, Model model) {
 		NotiDTO nDTO = new NotiDTO();
 		
+		String seq = request.getParameter("seq");
+		
 		int result = 0;
 		
 		try {
-			result = notiService.deleteNoti("seq");
+			result = notiService.deleteNoti(seq);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		if(result>0) {
 			model.addAttribute("url","/noti/notiList.do");
-			model.addAttribute("msg","삭제 성공");
+			model.addAttribute("msg", "삭제 성공");
 		} else {
 			model.addAttribute("url","/noti/notiDetail.do");
 			model.addAttribute("msg","삭제 실패");
@@ -144,6 +147,4 @@ public class NotiController {
 		
 		return "/redirect";
 	}
-
-	
 }

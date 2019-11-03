@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="poly.persistance.mapper.JirCommentMapper">
+
+<select id="jcList" parameterType="String" resultType="JirCommentDTO">
+SELECT
+	rCommentNo,
+	rCommenttext,
+	rRegdate,
+	rRegno
+FROM
+	review_comment
+WHERE
+	reviewNo = #{reviewNo}
+ORDER BY rRegdate
+</select>
+
+<insert id="jirCommentReg" parameterType="JirCommentDTO">
+INSERT INTO review_comment (
+	reviewNo, rCommenttext, rRegno, rUpdno 
+)VALUES(
+	#{reviewNo}, #{rCommenttext}, #{rRegno}, #{rRegno}
+)
+</insert>
+
+<update id="jirCommentEdit" parameterType="JirCommentDTO">
+UPDATE review_comment
+SET
+	rCommenttext = #{rCommenttext},
+	rRegno = #{rRegno},
+	rRegdate = SYSDATE()
+WHERE rCommentNo = #{rCommentNo}
+</update>
+
+<delete id="jirCommentDel" parameterType="String">
+DELETE FROM review_comment
+WHERE rCommentNo = #{rCommentNo}
+</delete>
+
+</mapper>

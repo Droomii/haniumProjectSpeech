@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="poly.persistance.mapper.QSetMapper">
+<insert id="insertQSet" parameterType="QSetDTO">
+INSERT INTO qset(
+	qsetTitle, qsetDesc, content, regNo, updNo, interestNo
+	)VALUES(
+		#{qsetTitle}, #{qsetDesc}, #{content}, #{regNo}, #{regNo}, #{interestNo})
+</insert>
+<select id="getQSetList" resultType="QSetDTO">
+SELECT * FROM qset
+ORDER BY qsetNo DESC
+LIMIT #{i}, 10;
+</select>
+<select id="getInterestName" parameterType="String" resultType="String">
+SELECT interestName FROM interest
+WHERE interestNo = #{interestNo}
+</select>
+<update id="viewcount" parameterType="String">
+UPDATE
+	qset
+SET
+	viewcount = viewcount + 1
+WHERE
+	qsetNo = #{qsetNo}
+</update>
+<select id="getQSetDetail" parameterType="String" resultType="QSetDTO">
+SELECT 
+	Q.*, U.id AS regId
+FROM qset Q, userinfo U
+WHERE Q.qsetNo =  #{qsetNo} AND Q.regNo = U.userNo;
+</select>
+<resultMap type="java.util.HashMap" id="interestPair">
+	<result property="key" column="interestNo"/>
+	<result property="value" column="interestName"/>
+</resultMap>
+<select id="getAllInterests" resultMap="interestPair">
+	SELECT * FROM interest
+</select>
+</mapper>

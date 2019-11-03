@@ -3,44 +3,44 @@
 <!-- JAVA와 연결할 Mapper 파일 설정 -->
 <mapper namespace="poly.persistance.mapper.NotiMapper">
 <insert id="insertNotiInfo" parameterType="NotiDTO">
-INSERT INTO NOTI(
-	TITLE, CONTENT, REG_DT
+INSERT INTO noti(
+	title, content, regDate, viewcount, updDate
 	)VALUES(
-		#{title}, #{content}, SYSDATE())
+		#{title}, #{content}, NOW(), 3, NOW())
 </insert>
 <select id="getNotiList" resultType="NotiDTO">
 SELECT
-	TITLE AS title,
-	CONTENT AS content,
-	REG_DT AS regDate,
-	NOTI_SEQ AS seq
+	title AS title,
+	content AS content,
+	regDate AS regDate,
+	notiNo AS seq
 FROM
-	NOTI
+	noti
 </select>
 <select id="getNotiDetail" parameterType="String" resultType="NotiDTO">
 SELECT
-	TITLE AS title,
-	CONTENT AS content,
-	REG_DT AS regDate,
-	NOTI_SEQ AS seq
+	title AS title,
+	content AS content,
+	regDate AS regDate,
+	notiNo AS seq
 FROM
-	NOTI
+	noti
 WHERE
-	NOTI_SEQ = #{seq}
+	notiNo = #{seq}
 </select>
 <update id="updateNoti" parameterType="NotiDTO">
 UPDATE
-	NOTI
+	noti
 SET
-	TITLE = #{title},
-	CONTENT = #{content}
+	title = #{title},
+	content = #{content}
 WHERE
-	NOTI_SEQ = #{seq}
+	notiNo = #{seq}
 </update>
 <delete id="deleteNoti" parameterType="String">
 DELETE
-	FROM NOTI
+	FROM noti
 WHERE
-	NOTI_SEQ = #{seq}
+	notiNo = #{seq}
 </delete>
 </mapper>

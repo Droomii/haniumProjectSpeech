@@ -6,16 +6,11 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import poly.dto.FeedbackCommentDTO;
 import poly.dto.ResFeedbackDTO;
-import poly.service.IFeedbackCommentService;
 import poly.service.IResFeedbackService;
 
 @Controller
@@ -67,10 +62,9 @@ public class ResFeedbackController {
 			e.printStackTrace();
 		}
 		
-		//fcDTO = resFeedbackService.commentReg 
-		
+		log.info("feedback_no : " + feedbackNo);
 		log.info("getResDetail success.");
-		//log.info("commentReg success.");
+		
 		
 		model.addAttribute("rDTO", rDTO);
 		
@@ -78,14 +72,6 @@ public class ResFeedbackController {
 		
 		return "/resFeedback/resDetailFeedback";
 	}
-	
-	
-	
-	
 
 }
 
-
-
-
-//피드백게시판 번호는 3번 (임의설정)

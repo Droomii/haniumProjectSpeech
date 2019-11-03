@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="poly.persistance.mapper.JobIntrvReviewMapper">
+
+<select id="getReviewList" resultType="JobIntrvReviewDTO">
+	SELECT
+		reviewNo,
+		reviewWriter,
+		reviewRegDate,
+		reviewContent,
+		reviewTitle
+	FROM
+		review
+</select>
+
+<select id="getReviewDetail" parameterType="String" resultType="JobIntrvReviewDTO">
+	SELECT
+		reviewNo,
+		reviewTitle,
+		reviewContent
+	FROM
+		review
+	WHERE
+		reviewNo = #{reviewNo}
+</select>
+
+<insert id="insertReview" parameterType="JobIntrvReviewDTO">
+	INSERT INTO review (
+		reviewWriter, reviewRegDate, reviewContent, reviewTitle
+	)VALUES(
+		#{reviewWriter}, SYSDATE(), #{reviewContent}, #{reviewTitle})
+</insert>
+
+<update id="updateReview" parameterType="JobIntrvReviewDTO">
+	UPDATE
+		review
+	SET
+		reviewTitle = #{reviewTitle},
+		reviewContent = #{reviewContent},
+		reviewUpdDate = SYSDATE()
+	WHERE
+		reviewNo = #{reviewNo}		
+</update>
+
+<delete id="deleteReview" parameterType="String">
+
+	DELETE FROM
+		review
+	WHERE
+		reviewNo = #{reviewNo}
+</delete>
+
+</mapper>

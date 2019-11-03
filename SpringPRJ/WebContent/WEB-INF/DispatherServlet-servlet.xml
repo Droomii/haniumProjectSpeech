@@ -15,6 +15,8 @@
     http://www.springframework.org/schema/context/spring-context.xsd">
 	<!-- 어노테이션 사용하기 -->
 	<mvc:annotation-driven />
+	<mvc:resources mapping="/resources/**" location="/resources/" cache-period="10"/>
+	<mvc:resources location="/smarteditor/" mapping="/smarteditor/**"></mvc:resources>
 	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />
 	<context:component-scan base-package="poly.controller" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -22,7 +24,10 @@
 
 	<context:component-scan base-package="poly.service" />
 	<context:component-scan base-package="poly.persistance.mapper" />
- 	
+ 	<!-- config properties -->
+ 	 <!-- context:property-placeholder location="classpath:database.properties"  /!-->
+	<context:property-placeholder location="/WEB-INF/config/*.properties" /> 
+
 	<!-- ViewResolver : 뷰 선택자 -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="order" value="1"/>
@@ -47,5 +52,6 @@
 	<!-- 파일업로드 기능 -->		
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" 
 		p:maxUploadSize="104857600" p:maxInMemorySize="104857600" />
+		
 
 </beans>
